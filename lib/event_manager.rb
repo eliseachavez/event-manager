@@ -22,13 +22,19 @@ contents.each do |row|
 
   zipcode = clean_zipcode(row[:zipcode])
 
-  legislators = civic_info.representative_info_by_address(
-    address: zipcode,
-    levels: 'country',
-    roles: ['legislatorUpperBody', 'legislatorLowerBody']
-  )
+  begin
+    legislators = civic_info.representative_info_by_address(
+      address: zipcode,
+      levels: 'country',
+      roles: ['legislatorUpperBody', 'legislatorLowerBody']
+    )
 
-  legislators = legislators.officials
+    legislators = legislators.officials
+  rescue
+    'You can find your rep by visiting www.commoncause.org'
+  end
+
+
 
 
   puts "#{name} #{zipcode} #{legislators}"
