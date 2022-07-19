@@ -1,11 +1,26 @@
 require 'csv'
 require 'google/apis/civicinfo_v2'
 
-civic_info = Google::Apis::CivicinfoV2::CivicInfoService.new
-civic_info.key = 'AIzaSyClRzDqDh5MsXwnCWi0kOiiBivP6JsSyBw'
-
 def clean_zipcode(zipcode)
   zipcode = zipcode.to_s.rjust(5,'0')[0..4]
+end
+
+def legislators_by_zipcode(zip)
+  civic_info = Google::Apis::CivicinfoV2::CivicInfoService.new
+  civic_info.key = 'AIzaSyClRzDqDh5MsXwnCWi0kOiiBivP6JsSyBw'
+
+  begin
+    legislators = civic_info.representative_info_by_address(
+      address: zipcode,
+      levels: 'country',
+      roles: ['legislatorUpperBody', 'legislatorLowerBody']
+    )
+    legislators = legislators.officials
+    legislators_names = legislators.map(&:name)
+    legislators_names.join(", ")
+  rescue
+    'You can find your rep by visiting www.commoncause.org'
+  end
 end
 
 
@@ -22,20 +37,7 @@ contents.each do |row|
 
   zipcode = clean_zipcode(row[:zipcode])
 
-  begin
-    legislators = civic_info.representative_info_by_address(
-      address: zipcode,
-      levels: 'country',
-      roles: ['legislatorUpperBody', 'legislatorLowerBody']
-    )
-
-    legislators = legislators.officials
-  rescue
-    'You can find your rep by visiting www.commoncause.org'
-  end
-
-
-
+  legislators = legislators_by_zipcode(zipcode)
 
   puts "#{name} #{zipcode} #{legislators}"
 end
