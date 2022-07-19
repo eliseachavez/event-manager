@@ -1,16 +1,11 @@
 require 'csv'
+require 'google/apis/civicinfo_v2'
+
+civic_info = Google::Apis::CivicInfoV2::CivicInfoService.new
+civic_info.key = 'AIzaSyClRzDqDh5MsXwnCWi0kOiiBivP6JsSyBw'
 
 def clean_zipcode(zipcode)
-  if zipcode.nil?
-    zipcode = '00000'
-  elsif zipcode.length > 5
-    zipcode.truncate(5)
-  elsif zipcode.length < 5
-    until zipcode.length == 5
-      zipcode = "0"+zipcode
-    end
-  end
-  zipcode
+  zipcode = zipcode.to_s.rjust(5,'0')[0..4]
 end
 
 
@@ -24,10 +19,19 @@ contents = CSV.open(
 
 contents.each do |row|
   name = row[:first_name]
+
   zipcode = clean_zipcode(row[:zipcode])
 
+  legislators = civic_info.representative_info_by_address(
+    address: zipcode,
+    levels: 'country',
+    roles: ['legislativeUpperBody', 'legislativeLowerBody']
+  )
 
-  puts "#{name} #{zipcode}"
+  legislators = legislators.officials
+
+
+  puts "#{name} #{zipcode} #{legislators} ""
 end
 
 
