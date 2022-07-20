@@ -1,0 +1,20 @@
+E, [2022-07-20T16:49:28.024015 #504298] ERROR -- :
+Error - #<
+Google::Apis::ClientError: parseError: Failed to parse address
+status_code: 400
+header: #<HTTP::Message::Headers:0x000055ac670d4148
+    @http_version="1.1",
+    @body_size=0,
+    @chunked=false,
+    @request_method="GET",
+    @request_uri=#<Addressable::URI:0x3d4
+      URI:https://civicinfo.googleapis.com/civicinfo/v2/representatives?address=00000&key=AIzaSyClRzDqDh5MsXwnCWi0kOiiBivP6JsSyBw&levels=country&roles=legislatorUpperBody&roles=legislatorLowerBody>,
+    @request_query=nil,
+    @request_absolute_uri=nil,
+    @status_code=400,
+    @reason_phrase="Bad Request",
+    @body_type=nil,
+    @body_charset=nil,
+    @body_date=nil,
+    @body_encoding=#<Encoding:UTF-8>, @is_request=false, @header_item=[["Content-Type", "application/json; charset=UTF-8"], ["Vary", "Origin"], ["Vary", "X-Origin"], ["Vary", "Referer"], ["Content-Encoding", "gzip"], ["Date", "Wed, 20 Jul 2022 21:49:28 GMT"], ["Server", "ESF"], ["Cache-Control", "private"], ["X-XSS-Protection", "0"], ["X-Frame-Options", "SAMEORIGIN"], ["X-Content-Type-Options", "nosniff"], ["Alt-Svc", "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\""], ["Transfer-Encoding", "chunked"]], @dumped=false> body: "{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"Failed to parse address\",\n    \"errors\": [\n      {\n        \"message\": \"Failed to parse address\",\n        \"domain\": \"global\",\n        \"reason\": \"parseError\"\n      }\n    ]\n  }\n}\n">
+
